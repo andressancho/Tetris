@@ -8,14 +8,15 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@android:color/black">
 
         <GridLayout
             android:id="@+id/gl"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:columnCount="13"
-            android:rowCount="20">
+            android:rowCount="22">
 
         </GridLayout>
     </RelativeLayout>
