@@ -8,10 +8,13 @@ public class Pieza {
 
     private int eje_x;
     private int eje_y;
+    public int x1,y1;
     private String color;
-    Pieza(int x,int y, String s){
+    Pieza(int x,int y,int x1,int x2, String s){
         eje_x=x;
         eje_y=y;
+        this.x1=x1;
+        this.y1=x2;
         color=s;
 
     }
@@ -20,7 +23,24 @@ public class Pieza {
         return eje_x;
     }
 
+    public int getX1() {
+        return x1;
+    }
+
+    public void setX1(int x1) {
+        this.x1 = x1;
+    }
+
+    public int getY1() {
+        return y1;
+    }
+
+    public void setY1(int y1) {
+        this.y1 = y1;
+    }
+
     public int getEje_y() {
+
         return eje_y;
     }
 
