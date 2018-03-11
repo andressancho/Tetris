@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     int rows=22;
     int columns=13;
+    int numR=0;
     boolean colision=false;
     boolean piezanueva=false;
     ImageView[][] views= new ImageView[rows][columns];
@@ -31,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Pieza> figura= new ArrayList<Pieza>();
     ArrayList<Pieza> figuraSiguiente= new ArrayList<Pieza>();
 
+    ArrayList<int[][]>rotaciones;
+
 
     Handler handler = new Handler();
     Runnable runnable;
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         figura=fabrica.obtenerPieza();
+        rotaciones=fabrica.obtenerRotaciones();
         figuraSiguiente=new ArrayList<Pieza>();//fabrica.obtenerPieza();
 
         initTablero();
@@ -81,17 +85,8 @@ public class MainActivity extends AppCompatActivity {
                 for(Pieza pieza:figura){
                     piecita[pieza.x1][pieza.y1]=pieza;
                 }
+                pintar();
 
-
-                for(int x=0;x<rows;x++){
-                    for(int y=0;y<columns;y++){
-                        if(piezas[x][y]!=null){
-                            views[x][y].setImageResource(R.drawable.pieza_amarillo);
-                        }else{
-                            views[x][y].setImageResource(R.drawable.pieza_gris);
-                        }
-                    }
-                }
                 for(int x=0;x<4;x++){
                     for(int y=0;y<4;y++){
                         if(piecita[x][y]!=null){
@@ -127,19 +122,16 @@ public class MainActivity extends AppCompatActivity {
                     else{
                         piezas[p.getEje_x()][p.getEje_y()] = p;
                         piezanueva=true;
-                        figura=figuraSiguiente;
+                        figura=fabrica.obtenerPieza();
+                        rotaciones=fabrica.obtenerRotaciones();
+                        numR=0;
                         figuraSiguiente=fabrica.obtenerPieza();
-
-
-
 
                     }
                 }
                 if(piezanueva){
                     colision=false;
                     piezanueva=false;
-
-
                 }
                 handler.postDelayed(runnable,1000);
             }
@@ -150,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void toLeft(View view){
 
+        pintar();
         boolean colisionIzq=false;
         for(Pieza p:figura){
             piezas[p.getEje_x()][p.getEje_y()]=null;
@@ -170,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void toRight(View view){
-
+        pintar();
         boolean colisionIzq=false;
         for(Pieza p:figura){
             piezas[p.getEje_x()][p.getEje_y()]=null;
@@ -191,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void toBottom(View view){
-
+        pintar();
         boolean colisionIzq=false;
         for(Pieza p:figura){
             piezas[p.getEje_x()][p.getEje_y()]=null;
@@ -208,6 +201,43 @@ public class MainActivity extends AppCompatActivity {
             }
             else {
                 piezas[p.getEje_x()][p.getEje_y()]=p;
+            }
+        }
+    }
+    public void rotate(View view){
+        for(Pieza p:figura){
+            piezas[p.getEje_x()][p.getEje_y()]=null;
+        }
+
+        for(int x=0;x<4;x++){
+            figura.get(x).setEje_x(figura.get(x).getEje_x()+rotaciones.get(numR)[x][0]);
+            figura.get(x).setEje_y(figura.get(x).getEje_y()+rotaciones.get(numR)[x][1]);
+        }
+        if(figura.get(0).getTipo()==6){
+            if(numR==1){
+                numR=0;
+            }
+            else{
+                numR++;
+            }
+        }
+        else{
+            if(numR==3){
+                numR=0;
+            }
+            else{
+                numR++;
+            }
+        }
+    }
+    public void pintar(){
+        for(int x=0;x<rows;x++){
+            for(int y=0;y<columns;y++){
+                if(piezas[x][y]!=null){
+                    views[x][y].setImageResource(R.drawable.pieza_amarillo);
+                }else{
+                    views[x][y].setImageResource(R.drawable.pieza_gris);
+                }
             }
         }
     }
