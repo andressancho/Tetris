@@ -205,30 +205,47 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void rotate(View view){
+        boolean colisionR=false;
         for(Pieza p:figura){
             piezas[p.getEje_x()][p.getEje_y()]=null;
         }
 
-        for(int x=0;x<4;x++){
-            figura.get(x).setEje_x(figura.get(x).getEje_x()+rotaciones.get(numR)[x][0]);
-            figura.get(x).setEje_y(figura.get(x).getEje_y()+rotaciones.get(numR)[x][1]);
+        for(int i=0;i<4;i++){
+            if(figura.get(i).getEje_y()+rotaciones.get(numR)[i][1]<0 ||
+               figura.get(i).getEje_y()+rotaciones.get(numR)[i][1]>=columns ||
+               figura.get(i).getEje_x()+rotaciones.get(numR)[i][0]>=rows ||
+               piezas[figura.get(i).getEje_x()+rotaciones.get(numR)[i][0]][figura.get(i).getEje_y()+rotaciones.get(numR)[i][1]]!=null ){
+
+                colisionR=true;
+            }
         }
-        if(figura.get(0).getTipo()==6){
-            if(numR==1){
-                numR=0;
+        if(!colisionR){
+            for(int x=0;x<4;x++){
+                figura.get(x).setEje_x(figura.get(x).getEje_x()+rotaciones.get(numR)[x][0]);
+                figura.get(x).setEje_y(figura.get(x).getEje_y()+rotaciones.get(numR)[x][1]);
+            }
+            if(figura.get(0).getTipo()==0){
+                if(numR==1){
+                    numR=0;
+                }
+                else{
+                    numR++;
+                }
+            }
+            else if(figura.get(0).getTipo()==1){
+                if(numR==3){
+                    numR=0;
+                }
+                else{
+                    numR++;
+                }
             }
             else{
-                numR++;
-            }
-        }
-        else{
-            if(numR==3){
                 numR=0;
             }
-            else{
-                numR++;
-            }
         }
+
+
     }
     public void pintar(){
         for(int x=0;x<rows;x++){
@@ -240,6 +257,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+    public void verificarFila(){
+        
     }
 
 
