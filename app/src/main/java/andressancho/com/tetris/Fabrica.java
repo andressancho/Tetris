@@ -13,10 +13,11 @@ public class Fabrica {
     int tipoPieza=-1;
     public ArrayList<Pieza> I(){
         piezas= new ArrayList<Pieza>();
-        piezas.add(new Pieza(0,5,1,0,"azul",0));
-        piezas.add(new Pieza(1,5,1,1,"azul",0));
-        piezas.add(new Pieza(2,5,1,2,"azul",0));
-        piezas.add(new Pieza(3,5,1,3,"azul",0));
+        int random= (int) (Math.random()*5);
+        piezas.add(new Pieza(0,5,1,0,random,0));
+        piezas.add(new Pieza(1,5,1,1,random,0));
+        piezas.add(new Pieza(2,5,1,2,random,0));
+        piezas.add(new Pieza(3,5,1,3,random,0));
         return piezas;
     }
     public ArrayList<int[][]> obtenerRotacionesI(){
@@ -29,10 +30,11 @@ public class Fabrica {
     }
     public ArrayList<Pieza> T(){
         piezas= new ArrayList<Pieza>();
-        piezas.add(new Pieza(0,6,2,1,"azul",1));
-        piezas.add(new Pieza(1,5,3,0,"azul",1));
-        piezas.add(new Pieza(1,6,3,1,"azul",1));
-        piezas.add(new Pieza(1,7,3,2,"azul",1));
+        int random= (int) (Math.random()*5);
+        piezas.add(new Pieza(0,6,2,1,random,1));
+        piezas.add(new Pieza(1,5,3,0,random,1));
+        piezas.add(new Pieza(1,6,3,1,random,1));
+        piezas.add(new Pieza(1,7,3,2,random,1));
                 return piezas;
     }
     public ArrayList<int[][]> obtenerRotacionesT(){
@@ -49,10 +51,11 @@ public class Fabrica {
     }
     public ArrayList<Pieza> L(){
         piezas= new ArrayList<Pieza>();
-        piezas.add(new Pieza(0,5,1,0,"azul",1));
-        piezas.add(new Pieza(1,5,2,0,"azul",1));
-        piezas.add(new Pieza(2,5,3,0,"azul",1));
-        piezas.add(new Pieza(2,6,3,1,"azul",1));
+        int random= (int) (Math.random()*5);
+        piezas.add(new Pieza(0,5,1,0,random,1));
+        piezas.add(new Pieza(1,5,2,0,random,1));
+        piezas.add(new Pieza(2,5,3,0,random,1));
+        piezas.add(new Pieza(2,6,3,1,random,1));
         return piezas;
     }
     public ArrayList<int[][]> obtenerRotacionesL(){
@@ -69,10 +72,11 @@ public class Fabrica {
     }
     public ArrayList<Pieza> O(){
         piezas= new ArrayList<Pieza>();
-        piezas.add(new Pieza(0,5,1,0,"azul",2));
-        piezas.add(new Pieza(1,5,2,0,"azul",2));
-        piezas.add(new Pieza(0,6,1,1,"azul",2));
-        piezas.add(new Pieza(1,6,2,1,"azul",2));
+        int random= (int) (Math.random()*5);
+        piezas.add(new Pieza(0,5,1,0,random,2));
+        piezas.add(new Pieza(1,5,2,0,random,2));
+        piezas.add(new Pieza(0,6,1,1,random,2));
+        piezas.add(new Pieza(1,6,2,1,random,2));
         return piezas;
     }
     public ArrayList<int[][]> obtenerRotacionesO(){
@@ -83,10 +87,11 @@ public class Fabrica {
     }
     public ArrayList<Pieza> S(){
         piezas= new ArrayList<Pieza>();
-        piezas.add(new Pieza(0,7,1,2,"azul",0));
-        piezas.add(new Pieza(0,6,1,1,"azul",0));
-        piezas.add(new Pieza(1,6,2,1,"azul",0));
-        piezas.add(new Pieza(1,5,2,0,"azul",0));
+        int random= (int) (Math.random()*5);
+        piezas.add(new Pieza(0,7,1,2,random,0));
+        piezas.add(new Pieza(0,6,1,1,random,0));
+        piezas.add(new Pieza(1,6,2,1,random,0));
+        piezas.add(new Pieza(1,5,2,0,random,0));
         return piezas;
     }
     public ArrayList<int[][]> obtenerRotacionesS(){
@@ -99,10 +104,11 @@ public class Fabrica {
     }
     public ArrayList<Pieza> Z(){
         piezas= new ArrayList<Pieza>();
-        piezas.add(new Pieza(0,5,1,0,"azul",0));
-        piezas.add(new Pieza(0,6,1,1,"azul",0));
-        piezas.add(new Pieza(1,6,2,1,"azul",0));
-        piezas.add(new Pieza(1,7,2,2,"azul",0));
+        int random= (int) (Math.random()*5);
+        piezas.add(new Pieza(0,5,1,0,random,0));
+        piezas.add(new Pieza(0,6,1,1,random,0));
+        piezas.add(new Pieza(1,6,2,1,random,0));
+        piezas.add(new Pieza(1,7,2,2,random,0));
         return piezas;
     }
     public ArrayList<int[][]> obtenerRotacionesZ(){
@@ -115,10 +121,11 @@ public class Fabrica {
     }
     public ArrayList<Pieza> J(){
         piezas= new ArrayList<Pieza>();
-        piezas.add(new Pieza(0,6,0,2,"azul",1));
-        piezas.add(new Pieza(1,6,1,2,"azul",1));
-        piezas.add(new Pieza(2,6,2,2,"azul",1));
-        piezas.add(new Pieza(2,5,2,1,"azul",1));
+        int random= (int) (Math.random()*5);
+        piezas.add(new Pieza(0,6,0,2,random,1));
+        piezas.add(new Pieza(1,6,1,2,random,1));
+        piezas.add(new Pieza(2,6,2,2,random,1));
+        piezas.add(new Pieza(2,5,2,1,random,1));
         return piezas;
     }
     public ArrayList<int[][]> obtenerRotacionesJ(){

@@ -10,13 +10,17 @@ public class Pieza {
     private int eje_y;
     public int x1,y1;
     private int tipo;
-    private String color;
+    private int color;
 
     public int getTipo() {
         return tipo;
     }
 
-    Pieza(int x, int y, int x1, int x2, String s, int t){
+    public int getColor() {
+        return color;
+    }
+
+    Pieza(int x, int y, int x1, int x2, int s, int t){
         eje_x=x;
         eje_y=y;
         this.x1=x1;

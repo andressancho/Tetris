@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -33,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Pieza> figuraSiguiente= new ArrayList<Pieza>();
 
     ArrayList<int[][]>rotaciones;
+    int filasEliminadas=0;
+    boolean terminar=false;
 
 
     Handler handler = new Handler();
@@ -67,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         for(int x=0;x<4;x++){
             for(int y=0;y<4;y++){
                 ImageView i= new ImageView(this);
-                i.setImageResource(R.drawable.pieza_amarillam);
+                i.setImageResource(R.drawable.pieza_negra);
                 mgl.addView(i);
                 mViews[x][y]=i;
             }
@@ -77,67 +81,84 @@ public class MainActivity extends AppCompatActivity {
         runnable= new Runnable() {
             @Override
             public void run() {
+                if(!terminar){
+                    for(Pieza p:figura){
+                        piezas[p.getEje_x()][p.getEje_y()]=p;
+                    }
 
-                for(Pieza p:figura){
-                    piezas[p.getEje_x()][p.getEje_y()]=p;
-                }
+                    pintar();
 
-                for(Pieza pieza:figura){
-                    piecita[pieza.x1][pieza.y1]=pieza;
-                }
-                pintar();
-
-                for(int x=0;x<4;x++){
-                    for(int y=0;y<4;y++){
-                        if(piecita[x][y]!=null){
-                            mViews[x][y].setImageResource(R.drawable.pieza_amarillam);
-                            piecita[x][y]=null;
-                        }else{
-                            mViews[x][y].setImageResource(R.drawable.pieza_negra);
+                    for(int x=0;x<4;x++){
+                        for(int y=0;y<4;y++){
+                            if(piecita[x][y]!=null){
+                                mViews[x][y].setImageResource(R.drawable.pieza_amarillam);
+                                piecita[x][y]=null;
+                            }else{
+                                mViews[x][y].setImageResource(R.drawable.pieza_negra);
+                            }
                         }
                     }
-                }
 
-
-                for(Pieza p:figura) {
-                    piezas[p.getEje_x()][p.getEje_y()]=null;
-                }
-                for (Pieza p:figura) {
-
-                    if(p.getEje_x()+1==rows) {
-                        colision = true;
+                    for(Pieza p:figura) {
+                        piezas[p.getEje_x()][p.getEje_y()]=null;
                     }
-                    else{
-                        if(piezas[p.getEje_x()+1][p.getEje_y()]!=null){
-                            colision=true;
+
+                    for (Pieza p:figura) {
+
+                        if(p.getEje_x()+1==rows) {
+                            colision = true;
                         }
+                        else{
+                            if(piezas[p.getEje_x()+1][p.getEje_y()]!=null){
+                                colision=true;
+                            }
 
+                        }
                     }
-                }
-                for(Pieza p:figura) {
-                    if(!colision) {
-                        p.setEje_x(p.getEje_x() + 1);
-                        piezas[p.getEje_x()][p.getEje_y()] = p;
-                    }
-                    else{
-                        piezas[p.getEje_x()][p.getEje_y()] = p;
-                        piezanueva=true;
-                        figura=fabrica.obtenerPieza();
-                        rotaciones=fabrica.obtenerRotaciones();
-                        numR=0;
-                        figuraSiguiente=fabrica.obtenerPieza();
+                    for(Pieza p:figura) {
+                        if(!colision) {
+                            p.setEje_x(p.getEje_x() + 1);
+                            piezas[p.getEje_x()][p.getEje_y()] = p;
+                        }
+                        else{
+                            piezas[p.getEje_x()][p.getEje_y()] = p;
+                            piezanueva=true;
+                            figura=fabrica.obtenerPieza();
+                            rotaciones=fabrica.obtenerRotaciones();
+                            numR=0;
+                            figuraSiguiente=fabrica.obtenerPieza();
 
+                        }
                     }
+                    if(piezanueva){
+                        colision=false;
+                        piezanueva=false;
+                        verificarFila();
+                        terminarJuego();
+                    }
+
                 }
-                if(piezanueva){
-                    colision=false;
-                    piezanueva=false;
+                else {
+                    pintar();
+                    Toast t=Toast.makeText(getApplicationContext(),"Has perdido",Toast.LENGTH_SHORT);
+                    t.show();
                 }
                 handler.postDelayed(runnable,1000);
             }
         };
         handler.postDelayed(runnable,1000);
 
+
+    }
+    public void reiniciar(View view){
+        terminar=false;
+        figura=fabrica.obtenerPieza();
+        rotaciones=fabrica.obtenerRotaciones();
+        for(int x=0;x<rows;x++){
+            for(int y=0;y<columns;y++){
+               piezas[x][y]=null;
+            }
+        }
 
     }
     public void toLeft(View view){
@@ -248,10 +269,29 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void pintar(){
+        TextView txt = findViewById(R.id.txt);
+        txt.setText(Integer.toString(filasEliminadas));
         for(int x=0;x<rows;x++){
             for(int y=0;y<columns;y++){
                 if(piezas[x][y]!=null){
-                    views[x][y].setImageResource(R.drawable.pieza_amarillo);
+                    switch (piezas[x][y].getColor()){
+                        case 0:
+                            views[x][y].setImageResource(R.drawable.pieza_amarillo);
+                            break;
+                        case 1:
+                            views[x][y].setImageResource(R.drawable.pieza_vino);
+                            break;
+                        case 2:
+                            views[x][y].setImageResource(R.drawable.pieza_turquesa);
+                            break;
+                        case 3:
+                            views[x][y].setImageResource(R.drawable.pieza_verde);
+                            break;
+                        case 4:
+                            views[x][y].setImageResource(R.drawable.pieza_azul);
+                            break;
+                    }
+
                 }else{
                     views[x][y].setImageResource(R.drawable.pieza_gris);
                 }
@@ -259,7 +299,37 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void verificarFila(){
-        
+        boolean borrar=true;
+        for(int x=0;x<rows;x++){
+            for(int y=0;y<columns;y++){
+                if(piezas[x][y]==null){
+                    borrar=false;
+                }
+            }
+            if(borrar){
+                filasEliminadas++;
+                for(int i=rows-1;i>=0;i--){
+                    for(int j=columns-1;j>=0;j--){
+                        if(i==x){
+                            piezas[i][j]=null;
+                        }
+                        if(i<x){
+                            piezas[i+1][j]=piezas[i][j];
+                            piezas[i][j]=null;
+                        }
+                    }
+                }
+            }
+            borrar=true;
+        }
+        pintar();
+    }
+    public void terminarJuego(){
+        for(Pieza p: figura){
+            if(piezas[p.getEje_x()][p.getEje_y()]!=null){
+                terminar=true;
+            }
+        }
     }
 
 
